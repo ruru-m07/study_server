@@ -2,12 +2,10 @@ const User = require("../models/User");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
-const connectToMongo = require("../db");
 const JWT_SECRET = "ruru";
 
 module.exports = {
   createuser: async (req, res) => {
-    let connect = await connectToMongo()
     let success = false;
     // if there are errors, return the bad request and the errors
     const error = validationResult(req);
@@ -53,8 +51,6 @@ module.exports = {
     }
   },
   login: async (req, res) => {
-    let connect = await connectToMongo();
-
     let success = false;
     const error = validationResult(req);
     if (!error.isEmpty()) {
@@ -92,8 +88,6 @@ module.exports = {
     }
   },
   whoami: async (req, res) => {
-    let connect = await connectToMongo();
-
     try {
       let userId = req.user.id;
       const user = await User.findById(userId).select("-password");
@@ -105,8 +99,6 @@ module.exports = {
     }
   },
   getuserbyid: async (req, res) => {
-    let connect = await connectToMongo();
-
     try {
       let userId = req.params.id;
       const user = await User.findById(userId).select("-password");
@@ -118,8 +110,6 @@ module.exports = {
     }
   },
   alluser: async (req, res) => {
-    let connect = await connectToMongo();
-
     try {
       const alluser = await User.find({});
       res.send({ status: "ok", data: alluser });
@@ -128,8 +118,6 @@ module.exports = {
     }
   },
   getalluser: async (req, res, next) => {
-    let connect = await connectToMongo();
-
     // console.log(req.params.id);
     try {
       let user = await User.findById({ _id: req.params.id }).select(
