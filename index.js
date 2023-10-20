@@ -6,6 +6,7 @@ const ChatRoute = require("./routes/ChatRoute");
 const MessageRoute = require("./routes/MessageRoute");
 const multer = require("multer");
 
+//  connectToMongo();
 connectToMongo();
 const app = express();
 const server = http.createServer(app);
